@@ -1,10 +1,30 @@
 /********** Template CSS **********/
 
+@font-face {
+    font-family: 'AironeFont';
+    /* Scegli un nome per il tuo font */
+    src: url('BRIANJAMES.TTF') format('truetype');
+    /* Percorso al file .ttf */
+    font-weight: normal;
+    /* Specifica il peso del font */
+    font-style: normal;
+    /* Specifica lo stile del font (normale, corsivo, ecc.) */
+}
+
 :root {
     --primary: #066023;
     --light: #F5F5F5;
     --dark: #353535;
     --secondary: #033C79;
+}
+
+.team-image {
+    width: 100%;
+    /* Make image full width of its container */
+    height: 430px;
+    /* Set a fixed height for uniformity */
+    object-fit: cover;
+    /* Ensure the image covers the area without distortion */
 }
 
 .fw-medium {
@@ -178,7 +198,7 @@
 
 .header-carousel .owl-nav {
     position: absolute;
-    width: 200px;
+    width: 300px;
     height: 45px;
     bottom: 30px;
     left: 50%;
