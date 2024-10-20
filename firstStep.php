@@ -38,6 +38,90 @@ file_put_contents('request_log.txt', date('Y-m-d H:i:s') . " - " . $_SERVER['REM
 
 $EmailFirst = $_POST["mail"];
 
+function generateUniqueRandomNumbers($count, $min, $max) {
+    if ($count > ($max - $min + 1)) {
+        throw new Exception("Count exceeds the range of unique numbers.");
+    }
+
+    $numbers = range($min, $max); // Create an array of numbers from min to max
+    shuffle($numbers); // Shuffle the array to randomize
+    return array_slice($numbers, 0, $count); // Return the first $count numbers
+}
+
+$randomNumbers = generateUniqueRandomNumbers(6, 0, 9);
+
+$NumberString = implode("", $randomNumbers);
+
+// Define the subject of the email
+$subject = "Nuovo socio Airone APS";
+// Define the message body of the email
+$message = '<!DOCTYPE html>
+        <html lang="it">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Grazie per la Registrazione</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background: #fff;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                }
+                h1 {
+                    color: #333;
+                }
+                .code {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #fff;
+                    background-color: #007bff;
+                    border-radius: 5px;
+                    margin: 20px 0;
+                }
+                p {
+                    color: #555;
+                    line-height: 1.6;
+                }
+                footer {
+                    margin-top: 20px;
+                    font-size: 12px;
+                    color: #777;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Grazie per la tua Registrazione!</h1>
+                <p>Ciao,</p>
+                <p>Grazie per aver iniziato a compilare il modulo di iscrizione sul nostro sito. Siamo entusiasti di averti con noi!</p>
+                <p>Per completare la registrazione, ti preghiamo di utilizzare il seguente codice numerico:</p>
+                <div class="code">' . $NumberString .'</div>
+                <p>Inserisci questo codice nel sito per completare la tua registrazione. Se hai domande, non esitare a contattarci.</p>
+                <footer>
+                    <p>Team di Supporto<br>info@aironeaps.it</p>
+                </footer>
+            </div>
+        </body>
+        </html>';
+
+// Define the headers (e.g., From, Reply-To, etc.)
+$headers = "MIME-Version: 1.0" . "\r\n";
+$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+$headers .= "From: no-reply@aironeaps.it" . "\r\n";
+
+mail($EmailFirst, $subject, $message, $headers);
+
 // TODO invia mail
 // Define the subject of the email
 // $subject = "Test Email from PHP";
@@ -56,27 +140,13 @@ $EmailFirst = $_POST["mail"];
 //     echo "Failed to send email.";
 // }
 
-function generateUniqueRandomNumbers($count, $min, $max) {
-    if ($count > ($max - $min + 1)) {
-        throw new Exception("Count exceeds the range of unique numbers.");
-    }
 
-    $numbers = range($min, $max); // Create an array of numbers from min to max
-    shuffle($numbers); // Shuffle the array to randomize
-    return array_slice($numbers, 0, $count); // Return the first $count numbers
-}
-
-$randomNumbers = generateUniqueRandomNumbers(6, 0, 9);
-
-$NumberString = implode("", $randomNumbers);
 
 // cripto aes256
 $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
 $encrypted = openssl_encrypt($EmailFirst, 'aes-256-cbc', ($SecretPW . $NumberString), 0, $iv);
 $encrypted_iv = base64_encode($iv . $encrypted);
 
-
-echo "Your new code to insert: " . $NumberString;
 
 echo '<!DOCTYPE html>
 <html lang="en">

@@ -69,12 +69,163 @@ $Attivita = $_POST["Attivita"];
 
 
 if(hash('sha256', $Number . $SecretPW ) != $HashCode){
-    echo "C'è stato un errore. Per favore torna indietro e riprova. ";
+    echo "C'è stato un errore. Per favore torna indietro e riprova.";
     echo '<a href="nuovoSocio.html">Pagina iniziale</a>';
 }else{
     $Mail = decrypt_aes($Mail, ($SecretPW . $Number));
-    echo $Mail;
-    echo $Attivita;
+
+    // Define the subject of the email
+    $subject = "Nuova richiesta tesseramento AIRONE";
+    // Define the message body of the email
+    $message = '<!DOCTYPE html>
+            <html lang="it">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Parametri PHP</title>
+                <style>
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    th, td {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                </style>
+            </head>
+            <body>
+                <h3>Ciao, una nuova richiesta di tesseramento in arrivo:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome Campo</th>
+                            <th>Valore</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mail</td>
+                            <td>'.$Mail.'</td>
+                        </tr>
+                        <tr>
+                            <td>Nome Completo</td>
+                            <td>'.$NomeCompleto.'</td>
+                        </tr>
+                        <tr>
+                            <td>Luogo di Nascita</td>
+                            <td>'.$luogoNascita.'</td>
+                        </tr>
+                        <tr>
+                            <td>Codice Fiscale</td>
+                            <td>'.$CodeF.'</td>
+                        </tr>
+                        <tr>
+                            <td>Numero di Telefono</td>
+                            <td>'.$phoneNum.'</td>
+                        </tr>
+                        <tr>
+                            <td>Data di Nascita</td>
+                            <td>'.$NascitaDate.'</td>
+                        </tr>
+                        <tr>
+                            <td>Genere</td>
+                            <td>'.$gender.'</td>
+                        </tr>
+                        <tr>
+                            <td>Indirizzo Residenza</td>
+                            <td>'.$indirizzoRes.'</td>
+                        </tr>
+                        <tr>
+                            <td>Stato</td>
+                            <td>'.$Stato.'</td>
+                        </tr>
+                        <tr>
+                            <td>Città</td>
+                            <td>'.$Citta.'</td>
+                        </tr>
+                        <tr>
+                            <td>Regione</td>
+                            <td>'.$Regione.'</td>
+                        </tr>
+                        <tr>
+                            <td>Codice Postale</td>
+                            <td>'.$PostalCode.'</td>
+                        </tr>
+                        <tr>
+                            <td>Attività</td>
+                            <td>'.$Attivita.'</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </body>
+            </html>';
+    // Define the headers (e.g., From, Reply-To, etc.)
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: no-reply@aironeaps.it" . "\r\n";
+
+    mail("cecchettini.stefano@gmail.com", $subject, $message, $headers);
+
+
+
+    $subject = "Richiesta inviata con successo!";
+    // Define the message body of the email
+    $message = '<!DOCTYPE html>
+            <html lang="it">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Grazie per la Registrazione</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .container {
+                        max-width: 600px;
+                        margin: 0 auto;
+                        background: #fff;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                    }
+                    p {
+                        color: #555;
+                        line-height: 1.6;
+                    }
+                    footer {
+                        margin-top: 20px;
+                        font-size: 12px;
+                        color: #777;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <p>Ciao '.$NomeCompleto.', grazie per la tua Registrazione!</p>
+                    <p>La tua richiesta è stata ricevuta e sarà ora esaminata dal nostro consiglio di amministrazione. Siamo entusiasti di averti con noi e ci impegniamo a fornirti un\'esperienza di alta qualità.</p>
+                    <p>Riceverai via email il resoconto finale della tua richiesta, quindi assicurati di controllare la tua casella di posta.</p>
+                    <p>Se hai domande o necessiti di ulteriori informazioni, non esitare a contattarci.</p>
+                    <footer>
+                        <p>Team di Supporto<br>info@aironeaps.it</p>
+                    </footer>
+                </div>
+            </body>
+            </html>';
+
+    // Define the headers (e.g., From, Reply-To, etc.)
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: no-reply@aironeaps.it" . "\r\n";
+
+    mail($Mail, $subject, $message, $headers);
 
     header('Location: nuovoSocioThanks.html');
     exit();
