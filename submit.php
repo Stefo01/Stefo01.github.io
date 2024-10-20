@@ -169,7 +169,7 @@ if(hash('sha256', $Number . $SecretPW ) != $HashCode){
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "From: no-reply@aironeaps.it" . "\r\n";
 
-    mail("cecchettini.stefano@gmail.com", $subject, $message, $headers);
+    mail("info@aironeaps.it", $subject, $message, $headers);
 
 
 

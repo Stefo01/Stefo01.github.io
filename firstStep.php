@@ -85,7 +85,7 @@ $message = '<!DOCTYPE html>
                     font-size: 24px;
                     font-weight: bold;
                     color: #fff;
-                    background-color: #007bff;
+                    background-color: #066023;
                     border-radius: 5px;
                     margin: 20px 0;
                 }
