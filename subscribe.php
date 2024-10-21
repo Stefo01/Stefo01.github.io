@@ -63,22 +63,18 @@ if(hash('sha256', $Number . $SecretPW ) != $HashCode){
                         <input type="radio" id="check-female" name="gender" value="Femmina" />
                         <label for="check-female">Femmina</label>
                         </div>
-                        <div class="gender">
-                        <input type="radio" id="check-other" name="gender" value="Altro" />
-                        <label for="check-other">Altro</label>
-                        </div>
                     </div>
                     </div>
                     <div class="input-box address">
                         <label>Indirizzo di residenza</label>
                         <input type="text" placeholder="Inserisci l\'indirizzo di residenza" name="indirizzoRes" required />
                         <div class="column">
-                            <input type="text" placeholder="Stato" name="Stato" required />
+                            <input type="number" placeholder="Codice Postale" name="PostalCode" required />
                             <input type="text" placeholder="Città" name="Citta" required />
                         </div>
                         <div class="column">
-                            <input type="text" placeholder="Regione" name="Regione" required />
-                            <input type="number" placeholder="Codice Postale" name="PostalCode" required />
+                        <input type="text" placeholder="Provincia" name="Regione" required />
+                            <input type="text" placeholder="Stato" name="Stato" required />
                         </div>
                     </div>
                     <div class="input-box">

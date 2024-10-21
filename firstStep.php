@@ -266,7 +266,7 @@ echo '<!DOCTYPE html>
         }
 
         function sendCode(inpu) {
-            window.location.href = \'subscribe.php?n=\' + inpu + \'&q='. hash('sha256', $NumberString . $SecretPW ) .'&m=' . $encrypted_iv . '\';
+            window.location.href = \'subscribeb.php?n=\' + inpu + \'&q='. hash('sha256', $NumberString . $SecretPW ) .'&m=' . $encrypted_iv . '\';
         }
         
         // Funzione per passare automaticamente al campo successivo dopo aver inserito un numero
@@ -275,14 +275,14 @@ echo '<!DOCTYPE html>
                 if (input.value.length === 1 && index < inputs.length - 1) {
                     inputs[index + 1].focus();
                 }
+                if (Array.from(inputs).every(i => i.value !== \'\')) {
+                    const completeCode = getCode(); // Ottieni il codice completo
+                    sendCode(completeCode);
+                }
             });
             input.addEventListener(\'keydown\', (e) => {
                 if (e.key === \'Backspace\' && input.value.length === 0 && index > 0) {
                     inputs[index - 1].focus();
-                }
-                if (index === inputs.length - 1 && Array.from(inputs).every(i => i.value !== \'\')) {
-                    const completeCode = getCode(); // Ottieni il codice completo
-                    sendCode(completeCode);
                 }
             });
         });
